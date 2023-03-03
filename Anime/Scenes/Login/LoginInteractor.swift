@@ -10,6 +10,7 @@ import UIKit
 
 protocol LoginBusinessLogic {
     func login(request: Login.Login.Request)
+    func autoLogin(request: Login.AutuLogin.Request)
 }
 
 protocol LoginDataStore {
@@ -26,6 +27,14 @@ class LoginInteractor: LoginBusinessLogic, LoginDataStore {
             guard let self = self else { return }
             let response = Login.Login.Response(result: result, error: error)
             self.presenter?.presentLogin(response: response)
+        })
+    }
+    
+    func autoLogin(request: Login.AutuLogin.Request) {
+        worker?.autoLogin(request, completionHandler: { [weak self] (isSignedIn) in
+            guard let self = self else { return }
+            let response = Login.AutuLogin.Response(isSignedIn: isSignedIn)
+            self.presenter?.presentAutoLogin(response: response)
         })
     }
 }

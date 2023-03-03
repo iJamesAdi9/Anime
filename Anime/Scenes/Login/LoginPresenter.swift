@@ -10,6 +10,7 @@ import UIKit
 
 protocol LoginPresentationLogic {
     func presentLogin(response: Login.Login.Response)
+    func presentAutoLogin(response: Login.AutuLogin.Response)
 }
 
 class LoginPresenter: LoginPresentationLogic {
@@ -24,6 +25,16 @@ class LoginPresenter: LoginPresentationLogic {
         } else {
             let viewModel = Login.Login.ViewModel(result: nil, error: response.error)
             viewController?.displayLoginFailure(viewModel: viewModel)
+        }
+    }
+    
+    func presentAutoLogin(response: Login.AutuLogin.Response) {
+        if response.isSignedIn {
+            let viewModel = Login.AutuLogin.ViewModel(isSignedIn: response.isSignedIn)
+            viewController?.displayAutoLoginSuccess(viewModel: viewModel)
+        } else {
+            let viewModel = Login.AutuLogin.ViewModel(isSignedIn: false)
+            viewController?.displayAutoLoginFailure(viewModel: viewModel)
         }
     }
 }

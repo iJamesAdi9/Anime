@@ -12,6 +12,9 @@ import FirebaseAuth
 protocol LoginDisplayLogic: AnyObject {
     func displayLoginSuccess(viewModel: Login.Login.ViewModel)
     func displayLoginFailure(viewModel: Login.Login.ViewModel)
+    
+    func displayAutoLoginSuccess(viewModel: Login.AutuLogin.ViewModel)
+    func displayAutoLoginFailure(viewModel: Login.AutuLogin.ViewModel)
 }
 
 class LoginViewController: UIViewController, LoginDisplayLogic {
@@ -42,6 +45,7 @@ class LoginViewController: UIViewController, LoginDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        autoLogin()
     }
     
     // MARK: - IBAction
@@ -63,6 +67,11 @@ class LoginViewController: UIViewController, LoginDisplayLogic {
         presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
+    }
+    
+    private func autoLogin() {
+        let request = Login.AutuLogin.Request()
+        interactor?.autoLogin(request: request)
     }
     
     private func login() {
@@ -88,9 +97,17 @@ class LoginViewController: UIViewController, LoginDisplayLogic {
         performSegue(withIdentifier: "RouteToMainViewController", sender: nil)
     }
     
+    func displayAutoLoginSuccess(viewModel: Login.AutuLogin.ViewModel) {
+        performSegue(withIdentifier: "RouteToMainViewController", sender: nil)
+    }
+    
     func displayLoginFailure(viewModel: Login.Login.ViewModel) {
         ProgressHUDManager.shared.dismissProgress()
         showAlert(message: viewModel.error?.localizedDescription ?? "")
+    }
+    
+    func displayAutoLoginFailure(viewModel: Login.AutuLogin.ViewModel) {
+        ProgressHUDManager.shared.dismissProgress()
     }
     
     // MARK: - Navigation

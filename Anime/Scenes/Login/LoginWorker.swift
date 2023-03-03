@@ -22,4 +22,12 @@ class LoginWorker {
             }
         }
     }
+    
+    func autoLogin(_ request: Login.AutuLogin.Request, completionHandler: @escaping (Bool) -> Void) {
+        if Auth.auth().currentUser != nil {
+            completionHandler(true)
+        } else {
+            completionHandler(false)
+        }
+    }
 }

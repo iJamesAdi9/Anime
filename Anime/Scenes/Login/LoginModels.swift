@@ -36,11 +36,11 @@ struct Login {
         }
         
         struct Response {
-            let success: Bool
+            let isSignedIn: Bool
         }
         
         struct ViewModel {
-            let success: Bool
+            let isSignedIn: Bool
         }
     }
 }
