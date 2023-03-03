@@ -7,6 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A1836B529B1A37D007BD648 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1836B429B1A37D007BD648 /* HttpClient.swift */; };
+		1A1836B829B1A472007BD648 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1836B729B1A472007BD648 /* Data+Extension.swift */; };
+		1A1836C029B1A791007BD648 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1836BA29B1A791007BD648 /* LoginPresenter.swift */; };
+		1A1836C129B1A791007BD648 /* LoginWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1836BB29B1A791007BD648 /* LoginWorker.swift */; };
+		1A1836C229B1A791007BD648 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1836BC29B1A791007BD648 /* LoginRouter.swift */; };
+		1A1836C329B1A791007BD648 /* LoginModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1836BD29B1A791007BD648 /* LoginModels.swift */; };
+		1A1836C429B1A791007BD648 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1836BE29B1A791007BD648 /* LoginViewController.swift */; };
+		1A1836C529B1A791007BD648 /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1836BF29B1A791007BD648 /* LoginInteractor.swift */; };
+		1A1836C829B1B7C0007BD648 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1A1836C729B1B7C0007BD648 /* IQKeyboardManagerSwift */; };
+		1A1836D029B1CCEB007BD648 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1836CA29B1CCEB007BD648 /* MainPresenter.swift */; };
+		1A1836D129B1CCEB007BD648 /* MainWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1836CB29B1CCEB007BD648 /* MainWorker.swift */; };
+		1A1836D229B1CCEB007BD648 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1836CC29B1CCEB007BD648 /* MainRouter.swift */; };
+		1A1836D329B1CCEB007BD648 /* MainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1836CD29B1CCEB007BD648 /* MainModels.swift */; };
+		1A1836D429B1CCEB007BD648 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1836CE29B1CCEB007BD648 /* MainViewController.swift */; };
+		1A1836D529B1CCEB007BD648 /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1836CF29B1CCEB007BD648 /* MainInteractor.swift */; };
 		6C1FA6FA29B0BD27009B984E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C1FA6F929B0BD27009B984E /* GoogleService-Info.plist */; };
 		6C2D091D29B0BED400B79B44 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6C2D091C29B0BED400B79B44 /* FirebaseAnalyticsSwift */; };
 		6C2D091F29B0BED400B79B44 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 6C2D091E29B0BED400B79B44 /* FirebaseAnalyticsWithoutAdIdSupport */; };
@@ -18,7 +33,6 @@
 		6C2D092E29B0CDE300B79B44 /* ProgressHUDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2D092D29B0CDE300B79B44 /* ProgressHUDManager.swift */; };
 		6C55A4DB29B0B476001E3C0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C55A4DA29B0B476001E3C0D /* AppDelegate.swift */; };
 		6C55A4DD29B0B476001E3C0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C55A4DC29B0B476001E3C0D /* SceneDelegate.swift */; };
-		6C55A4DF29B0B476001E3C0D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C55A4DE29B0B476001E3C0D /* ViewController.swift */; };
 		6C55A4E229B0B476001E3C0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C55A4E029B0B476001E3C0D /* Main.storyboard */; };
 		6C55A4E429B0B478001E3C0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C55A4E329B0B478001E3C0D /* Assets.xcassets */; };
 		6C55A4E729B0B478001E3C0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C55A4E529B0B478001E3C0D /* LaunchScreen.storyboard */; };
@@ -45,12 +59,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A1836B429B1A37D007BD648 /* HttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
+		1A1836B729B1A472007BD648 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
+		1A1836BA29B1A791007BD648 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
+		1A1836BB29B1A791007BD648 /* LoginWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorker.swift; sourceTree = "<group>"; };
+		1A1836BC29B1A791007BD648 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
+		1A1836BD29B1A791007BD648 /* LoginModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModels.swift; sourceTree = "<group>"; };
+		1A1836BE29B1A791007BD648 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		1A1836BF29B1A791007BD648 /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
+		1A1836CA29B1CCEB007BD648 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		1A1836CB29B1CCEB007BD648 /* MainWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWorker.swift; sourceTree = "<group>"; };
+		1A1836CC29B1CCEB007BD648 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
+		1A1836CD29B1CCEB007BD648 /* MainModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModels.swift; sourceTree = "<group>"; };
+		1A1836CE29B1CCEB007BD648 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		1A1836CF29B1CCEB007BD648 /* MainInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInteractor.swift; sourceTree = "<group>"; };
 		6C1FA6F929B0BD27009B984E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6C2D092D29B0CDE300B79B44 /* ProgressHUDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUDManager.swift; sourceTree = "<group>"; };
 		6C55A4D729B0B476001E3C0D /* Anime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Anime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C55A4DA29B0B476001E3C0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6C55A4DC29B0B476001E3C0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6C55A4DE29B0B476001E3C0D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6C55A4E129B0B476001E3C0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6C55A4E329B0B478001E3C0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6C55A4E629B0B478001E3C0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -68,6 +95,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C2D092929B0C9A000B79B44 /* Kingfisher in Frameworks */,
+				1A1836C829B1B7C0007BD648 /* IQKeyboardManagerSwift in Frameworks */,
 				6C2D092C29B0CA7100B79B44 /* JGProgressHUD in Frameworks */,
 				6C2D092629B0C95F00B79B44 /* Alamofire in Frameworks */,
 				6C2D091D29B0BED400B79B44 /* FirebaseAnalyticsSwift in Frameworks */,
@@ -94,18 +122,63 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6C1FA6F729B0BC85009B984E /* Services */ = {
+		1A1836B129B1A2A8007BD648 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				1A1836B429B1A37D007BD648 /* HttpClient.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
 		};
-		6C1FA6F829B0BCB3009B984E /* Scenes */ = {
+		1A1836B229B1A2B6007BD648 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				1A1836B929B1A494007BD648 /* Login */,
+				1A1836C929B1CCD7007BD648 /* Main */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		1A1836B329B1A2CB007BD648 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				6C2D092D29B0CDE300B79B44 /* ProgressHUDManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		1A1836B629B1A463007BD648 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1A1836B729B1A472007BD648 /* Data+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1A1836B929B1A494007BD648 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				1A1836BE29B1A791007BD648 /* LoginViewController.swift */,
+				1A1836BF29B1A791007BD648 /* LoginInteractor.swift */,
+				1A1836BA29B1A791007BD648 /* LoginPresenter.swift */,
+				1A1836BB29B1A791007BD648 /* LoginWorker.swift */,
+				1A1836BC29B1A791007BD648 /* LoginRouter.swift */,
+				1A1836BD29B1A791007BD648 /* LoginModels.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		1A1836C929B1CCD7007BD648 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				1A1836CE29B1CCEB007BD648 /* MainViewController.swift */,
+				1A1836CF29B1CCEB007BD648 /* MainInteractor.swift */,
+				1A1836CA29B1CCEB007BD648 /* MainPresenter.swift */,
+				1A1836CB29B1CCEB007BD648 /* MainWorker.swift */,
+				1A1836CC29B1CCEB007BD648 /* MainRouter.swift */,
+				1A1836CD29B1CCEB007BD648 /* MainModels.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		6C55A4CE29B0B476001E3C0D = {
@@ -131,10 +204,6 @@
 		6C55A4D929B0B476001E3C0D /* Anime */ = {
 			isa = PBXGroup;
 			children = (
-				6C1FA6F729B0BC85009B984E /* Services */,
-				6C1FA6F829B0BCB3009B984E /* Scenes */,
-				6C55A4DE29B0B476001E3C0D /* ViewController.swift */,
-				6C2D092D29B0CDE300B79B44 /* ProgressHUDManager.swift */,
 				6C55A4DA29B0B476001E3C0D /* AppDelegate.swift */,
 				6C55A4DC29B0B476001E3C0D /* SceneDelegate.swift */,
 				6C55A4E029B0B476001E3C0D /* Main.storyboard */,
@@ -142,6 +211,10 @@
 				6C55A4E529B0B478001E3C0D /* LaunchScreen.storyboard */,
 				6C55A4E829B0B478001E3C0D /* Info.plist */,
 				6C1FA6F929B0BD27009B984E /* GoogleService-Info.plist */,
+				1A1836B629B1A463007BD648 /* Extensions */,
+				1A1836B329B1A2CB007BD648 /* Manager */,
+				1A1836B129B1A2A8007BD648 /* Services */,
+				1A1836B229B1A2B6007BD648 /* Scenes */,
 			);
 			path = Anime;
 			sourceTree = "<group>";
@@ -187,6 +260,7 @@
 				6C2D092529B0C95F00B79B44 /* Alamofire */,
 				6C2D092829B0C9A000B79B44 /* Kingfisher */,
 				6C2D092B29B0CA7100B79B44 /* JGProgressHUD */,
+				1A1836C729B1B7C0007BD648 /* IQKeyboardManagerSwift */,
 			);
 			productName = Anime;
 			productReference = 6C55A4D729B0B476001E3C0D /* Anime.app */;
@@ -265,7 +339,7 @@
 				6C2D092429B0C95E00B79B44 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				6C2D092729B0C9A000B79B44 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				6C2D092A29B0CA7100B79B44 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
-				6C2D092F29B1072200B79B44 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				1A1836C629B1B7C0007BD648 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = 6C55A4D829B0B476001E3C0D /* Products */;
 			projectDirPath = "";
@@ -311,10 +385,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A1836B529B1A37D007BD648 /* HttpClient.swift in Sources */,
+				1A1836D229B1CCEB007BD648 /* MainRouter.swift in Sources */,
+				1A1836D329B1CCEB007BD648 /* MainModels.swift in Sources */,
+				1A1836C329B1A791007BD648 /* LoginModels.swift in Sources */,
 				6C2D092E29B0CDE300B79B44 /* ProgressHUDManager.swift in Sources */,
-				6C55A4DF29B0B476001E3C0D /* ViewController.swift in Sources */,
+				1A1836C029B1A791007BD648 /* LoginPresenter.swift in Sources */,
 				6C55A4DB29B0B476001E3C0D /* AppDelegate.swift in Sources */,
+				1A1836D429B1CCEB007BD648 /* MainViewController.swift in Sources */,
+				1A1836D129B1CCEB007BD648 /* MainWorker.swift in Sources */,
+				1A1836C229B1A791007BD648 /* LoginRouter.swift in Sources */,
 				6C55A4DD29B0B476001E3C0D /* SceneDelegate.swift in Sources */,
+				1A1836D029B1CCEB007BD648 /* MainPresenter.swift in Sources */,
+				1A1836C529B1A791007BD648 /* LoginInteractor.swift in Sources */,
+				1A1836B829B1A472007BD648 /* Data+Extension.swift in Sources */,
+				1A1836C129B1A791007BD648 /* LoginWorker.swift in Sources */,
+				1A1836D529B1CCEB007BD648 /* MainInteractor.swift in Sources */,
+				1A1836C429B1A791007BD648 /* LoginViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -662,6 +749,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1A1836C629B1B7C0007BD648 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = versionRange;
+				maximumVersion = 7.0.0;
+				minimumVersion = 6.5.0;
+			};
+		};
 		6C2D091B29B0BED400B79B44 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -694,17 +790,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		6C2D092F29B1072200B79B44 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1A1836C729B1B7C0007BD648 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1A1836C629B1B7C0007BD648 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
 		6C2D091C29B0BED400B79B44 /* FirebaseAnalyticsSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6C2D091B29B0BED400B79B44 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

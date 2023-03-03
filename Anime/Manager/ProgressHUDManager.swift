@@ -16,6 +16,7 @@ class ProgressHUDManager {
     
     func showProgress(view: UIView) {
         DispatchQueue.main.async {
+            self.hud.textLabel.text = "Loading"
             self.hud.show(in: view)
         }
     }
