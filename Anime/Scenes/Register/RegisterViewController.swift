@@ -1,33 +1,34 @@
 //
-//  LoginViewController.swift
+//  RegisterViewController.swift
 //  Anime
 //
-//  Created by Wachiravit Teerasarn on 3/3/2566 BE.
+//  Created by Wachiravit Teerasarn on 4/3/2566 BE.
 //  Copyright (c) 2566 BE ___ORGANIZATIONNAME___. All rights reserved.
 //
 
 import UIKit
 import FirebaseAuth
 
-protocol LoginDisplayLogic: AnyObject {
-    func displayLoginSuccess(viewModel: Login.Login.ViewModel)
-    func displayLoginFailure(viewModel: Login.Login.ViewModel)
+protocol RegisterDisplayLogic: AnyObject {
+    func displayCheckPasswordsMatchSuccess(viewModel: Register.CheckPasswordsMatch.ViewModel)
+    func displayCheckPasswordsMatchFailure(viewModel: Register.CheckPasswordsMatch.ViewModel)
     
-    func displayAutoLoginSuccess(viewModel: Login.AutuLogin.ViewModel)
-    func displayAutoLoginFailure(viewModel: Login.AutuLogin.ViewModel)
+    func displayRegisterSuccess(viewModel: Register.Register.ViewModel)
+    func displayRegisterFailure(viewModel: Register.Register.ViewModel)
 }
 
-class LoginViewController: UIViewController, LoginDisplayLogic {
+class RegisterViewController: UIViewController, RegisterDisplayLogic {
     
     // MARK: - Properties
     
-    var interactor: LoginBusinessLogic?
-    var router: (NSObjectProtocol & LoginRoutingLogic & LoginDataPassing)?
+    var interactor: RegisterBusinessLogic?
+    var router: (NSObjectProtocol & RegisterRoutingLogic & RegisterDataPassing)?
     
     // MARK: - IBOutlet
     
     @IBOutlet weak private var emailTextField: UITextField!
     @IBOutlet weak private var passwordTextField: UITextField!
+    @IBOutlet weak private var confirmPasswordTextField: UITextField!
     
     // MARK: - Object lifecycle
     
@@ -45,22 +46,21 @@ class LoginViewController: UIViewController, LoginDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        autoLogin()
     }
     
     // MARK: - IBAction
     
-    @IBAction func loginPressed(_ sender: UIButton) {
-        login()
+    @IBAction func registerPressed(_ sender: UIButton) {
+        checkPasswordsMatch()
     }
     
     // MARK: - General Function
     
     private func setup() {
         let viewController = self
-        let interactor = LoginInteractor()
-        let presenter = LoginPresenter()
-        let router = LoginRouter()
+        let interactor = RegisterInteractor()
+        let presenter = RegisterPresenter()
+        let router = RegisterRouter()
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
@@ -69,18 +69,20 @@ class LoginViewController: UIViewController, LoginDisplayLogic {
         router.dataStore = interactor
     }
     
-    private func autoLogin() {
-        let request = Login.AutuLogin.Request()
-        interactor?.autoLogin(request: request)
+    private func checkPasswordsMatch() {
+        let password: String = passwordTextField.text ?? ""
+        let confirmPassword: String = confirmPasswordTextField.text ?? ""
+        let request = Register.CheckPasswordsMatch.Request(password: password, confirmPassword: confirmPassword)
+        interactor?.checkPasswordsMatch(request: request)
     }
     
-    private func login() {
+    private func register() {
         ProgressHUDManager.shared.showProgress(view: view)
         
         let email: String = emailTextField.text ?? ""
         let password: String = passwordTextField.text ?? ""
-        let request = Login.Login.Request(email: email, password: password)
-        interactor?.login(request: request)
+        let request = Register.Register.Request(email: email, password: password)
+        interactor?.register(request: request)
     }
     
     private func showAlert(message: String) {
@@ -92,24 +94,23 @@ class LoginViewController: UIViewController, LoginDisplayLogic {
     
     // MARK: - Display
     
-    func displayLoginSuccess(viewModel: Login.Login.ViewModel) {
+    func displayCheckPasswordsMatchSuccess(viewModel: Register.CheckPasswordsMatch.ViewModel) {
+        register()
+    }
+    
+    func displayCheckPasswordsMatchFailure(viewModel: Register.CheckPasswordsMatch.ViewModel) {
+        showAlert(message: viewModel.message)
+    }
+    
+    func displayRegisterSuccess(viewModel: Register.Register.ViewModel) {
         ProgressHUDManager.shared.dismissProgress()
-        performSegue(withIdentifier: "RouteToMainViewController", sender: nil)
+        SignOutManager.shared.signOut()
+        navigationController?.popViewController(animated: true)
     }
     
-    func displayAutoLoginSuccess(viewModel: Login.AutuLogin.ViewModel) {
-        DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "RouteToMainViewController", sender: nil)
-        }
-    }
-    
-    func displayLoginFailure(viewModel: Login.Login.ViewModel) {
+    func displayRegisterFailure(viewModel: Register.Register.ViewModel) {
         ProgressHUDManager.shared.dismissProgress()
         showAlert(message: viewModel.error?.localizedDescription ?? "")
-    }
-    
-    func displayAutoLoginFailure(viewModel: Login.AutuLogin.ViewModel) {
-        ProgressHUDManager.shared.dismissProgress()
     }
     
     // MARK: - Navigation
