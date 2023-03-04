@@ -46,6 +46,7 @@
 		6CCB1CDE29B29B9B005F9535 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCB1CD829B29B9B005F9535 /* RegisterViewController.swift */; };
 		6CCB1CDF29B29B9B005F9535 /* RegisterInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCB1CD929B29B9B005F9535 /* RegisterInteractor.swift */; };
 		6CCB1CE329B2AA7A005F9535 /* SignOutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCB1CE229B2AA7A005F9535 /* SignOutManager.swift */; };
+		6CDDD6F929B4018500C8BDD1 /* MainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDDD6F829B4018500C8BDD1 /* MainCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +102,7 @@
 		6CCB1CD829B29B9B005F9535 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		6CCB1CD929B29B9B005F9535 /* RegisterInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterInteractor.swift; sourceTree = "<group>"; };
 		6CCB1CE229B2AA7A005F9535 /* SignOutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutManager.swift; sourceTree = "<group>"; };
+		6CDDD6F829B4018500C8BDD1 /* MainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +189,7 @@
 		1A1836C929B1CCD7007BD648 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				6CDDD6F729B4015E00C8BDD1 /* Cell */,
 				1A1836CE29B1CCEB007BD648 /* MainViewController.swift */,
 				1A1836CF29B1CCEB007BD648 /* MainInteractor.swift */,
 				1A1836CA29B1CCEB007BD648 /* MainPresenter.swift */,
@@ -263,6 +266,14 @@
 				6CCB1CD729B29B9B005F9535 /* RegisterModels.swift */,
 			);
 			path = Register;
+			sourceTree = "<group>";
+		};
+		6CDDD6F729B4015E00C8BDD1 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				6CDDD6F829B4018500C8BDD1 /* MainCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -438,6 +449,7 @@
 				1A1836D529B1CCEB007BD648 /* MainInteractor.swift in Sources */,
 				6CCB1CDF29B29B9B005F9535 /* RegisterInteractor.swift in Sources */,
 				1A1836C429B1A791007BD648 /* LoginViewController.swift in Sources */,
+				6CDDD6F929B4018500C8BDD1 /* MainCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
