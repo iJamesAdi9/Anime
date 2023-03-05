@@ -9,25 +9,75 @@
 import UIKit
 
 protocol MainBusinessLogic {
-    func doSomething(request: Main.Something.Request)
+    func fetchManga(request: Main.FetchManga.Request)
+    func saveManga(request: Main.SaveManga.Request)
+    func readManga(request: Main.ReadManga.Request)
+    func deleteManga(request: Main.DeleteManga.Request)
 }
 
 protocol MainDataStore {
-    //var name: String { get set }
 }
 
 class MainInteractor: MainBusinessLogic, MainDataStore {
     var presenter: MainPresentationLogic?
-    var worker: MainWorker?
-    //var name: String = ""
+    var worker: MainWorker? = MainWorker()
     
     // MARK: Do something
     
-    func doSomething(request: Main.Something.Request) {
-        worker = MainWorker()
-        worker?.doSomeWork()
+    func fetchManga(request: Main.FetchManga.Request) {
+        let search = request.search ?? ""
         
-        let response = Main.Something.Response()
-        presenter?.presentSomething(response: response)
+        worker?.fetchManga(search, completionHandler: { [weak self] (dataResponse) in
+            guard let self = self else { return }
+            switch dataResponse.result {
+                case .success(let mangaData):
+                    let response = Main.FetchManga.Response(data: mangaData, error: nil)
+                    self.presenter?.presentFetchManga(response: response)
+                case .failure(let error):
+                    let response = Main.FetchManga.Response(data: nil, error: error)
+                    self.presenter?.presentFetchManga(response: response)
+            }
+        })
+    }
+    
+    func saveManga(request: Main.SaveManga.Request) {
+        guard let manga = request.manga else { return }
+        worker?.saveManga(manga, completionHandler: { [weak self] (error) in
+            guard let self = self else { return }
+            if let error = error {
+                let response = Main.SaveManga.Response(isSuccess: false, error: error)
+                self.presenter?.presentSaveManga(response: response)
+            } else {
+                let response = Main.SaveManga.Response(isSuccess: true, error: nil)
+                self.presenter?.presentSaveManga(response: response)
+            }
+        })
+    }
+    
+    func readManga(request: Main.ReadManga.Request) {
+        worker?.readManga(completionHandler: { [weak self] (querySnapshot, error) in
+            guard let self = self else { return }
+            if let error = error {
+                let response = Main.ReadManga.Response(mangaData: request.mangaData, data: nil, error: error)
+                self.presenter?.presentReadManga(response: response)
+            } else {
+                let response = Main.ReadManga.Response(mangaData: request.mangaData, data: querySnapshot, error: nil)
+                self.presenter?.presentReadManga(response: response)
+            }
+        })
+    }
+    
+    func deleteManga(request: Main.DeleteManga.Request) {
+        guard let manga = request.manga else { return }
+        worker?.deleteManga(manga, completionHandler: { [weak self] (error) in
+            guard let self = self else { return }
+            if let error = error {
+                let response = Main.DeleteManga.Response(isSuccess: false, error: error)
+                self.presenter?.presentDeleteManga(response: response)
+            } else {
+                let response = Main.DeleteManga.Response(isSuccess: true, error: nil)
+                self.presenter?.presentDeleteManga(response: response)
+            }
+        })
     }
 }

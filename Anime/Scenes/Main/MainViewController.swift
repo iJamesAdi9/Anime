@@ -9,7 +9,17 @@
 import UIKit
 
 protocol MainDisplayLogic: AnyObject {
-    func displaySomething(viewModel: Main.Something.ViewModel)
+    func displayFetchMangaSuccess(viewModel: Main.FetchManga.ViewModel)
+    func displayFetchMangaFailure(viewModel: Main.FetchManga.ViewModel)
+    
+    func displaySaveMangaSuccess(viewModel: Main.SaveManga.ViewModel)
+    func displaySaveMangaFailure(viewModel: Main.SaveManga.ViewModel)
+    
+    func displayReadManagaSuccess(viewModel: Main.ReadManga.ViewModel)
+    func displayReadManagaFailure(viewModel: Main.ReadManga.ViewModel)
+    
+    func displayDeleteManagaSuccess(viewModel: Main.DeleteManga.ViewModel)
+    func displayDeleteManagaFailure(viewModel: Main.DeleteManga.ViewModel)
 }
 
 class MainViewController: UIViewController, MainDisplayLogic {
@@ -19,6 +29,8 @@ class MainViewController: UIViewController, MainDisplayLogic {
     var interactor: MainBusinessLogic?
     var router: (NSObjectProtocol & MainRoutingLogic & MainDataPassing)?
     private let mainCell: String = "MainCell"
+    private var mangaData: [Main.Manga.MangaData]?
+    private var favoriteManga: [Main.Manga.MangaData]?
     
     // MARK: - IBOutlet
     
@@ -40,7 +52,11 @@ class MainViewController: UIViewController, MainDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchManga()
     }
     
     // MARK: - General Function
@@ -61,20 +77,83 @@ class MainViewController: UIViewController, MainDisplayLogic {
     private func setupCell(_ indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: mainCell, for: indexPath) as? MainCell else { return UITableViewCell() }
         
-        cell.titleLabel.text = "Naruto received numerous awards during its airing, including the"
-        cell.detailLabel.text = "Moments prior to Naruto Uzumaki's birth, a huge demon known as the Kyuubi, the Nine-Tailed Fox, attacked Konohagakure, the Hidden Leaf Village, and wreaked havoc. In order to put an end to the Kyuubi's rampage, the leader of the village, the Fourth Hokage, sacrificed his life and sealed the monstrous beast inside the newborn Naruto.\n\nNow, Naruto is a hyperactive and knuckle-headed ninja still living in Konohagakure. Shunned because of the Kyuubi inside him, Naruto struggles to find his place in the village, while his burning desire to become the Hokage of Konohagakure leads him not only to some great new friends, but also some deadly foes.\n\n[Written by MAL Rewrite]"
+        let defaultData = Main.Manga.MangaData(malID: 0, images: nil, title: "", score: 0.0, synopsis: "")
+        let data = mangaData?[indexPath.row] ?? defaultData
+        cell.setupManga(data: data)
+        
+        cell.favoritePressed = { (mangaData) in
+            (mangaData.isFavorite == false) ? self.saveManaga(mangaData: mangaData) : self.deleteManga(mangaData: mangaData)
+        }
         
         return cell
     }
     
-    func doSomething() {
-        let request = Main.Something.Request()
-        interactor?.doSomething(request: request)
+    // MARK: - Call Interactor
+    
+    private func fetchManga(search: String? = "naruto") {
+        ProgressHUDManager.shared.showProgress(view: view)
+        let request = Main.FetchManga.Request(search: search)
+        interactor?.fetchManga(request: request)
+    }
+    
+    private func saveManaga(mangaData: Main.Manga.MangaData) {
+        ProgressHUDManager.shared.showProgress(view: view)
+        let request = Main.SaveManga.Request(manga: mangaData)
+        interactor?.saveManga(request: request)
+    }
+    
+    private func readManga() {
+        ProgressHUDManager.shared.showProgress(view: view)
+        let request = Main.ReadManga.Request(mangaData: mangaData)
+        interactor?.readManga(request: request)
+    }
+    
+    private func deleteManga(mangaData: Main.Manga.MangaData) {
+        ProgressHUDManager.shared.showProgress(view: view)
+        let request = Main.DeleteManga.Request(manga: mangaData)
+        interactor?.deleteManga(request: request)
     }
     
     // MARK: - Display
     
-    func displaySomething(viewModel: Main.Something.ViewModel) {
+    func displayFetchMangaSuccess(viewModel: Main.FetchManga.ViewModel) {
+        mangaData = viewModel.data
+        readManga()
+    }
+    
+    func displayFetchMangaFailure(viewModel: Main.FetchManga.ViewModel) {
+        ProgressHUDManager.shared.dismissProgress()
+        print(viewModel.error?.localizedDescription ?? "")
+    }
+    
+    func displaySaveMangaSuccess(viewModel: Main.SaveManga.ViewModel) {
+        fetchManga()
+    }
+    
+    func displaySaveMangaFailure(viewModel: Main.SaveManga.ViewModel) {
+        ProgressHUDManager.shared.dismissProgress()
+        print(viewModel.error?.localizedDescription ?? "")
+    }
+    
+    func displayReadManagaSuccess(viewModel: Main.ReadManga.ViewModel) {
+        ProgressHUDManager.shared.dismissProgress()
+        mangaData = viewModel.mangaData
+        favoriteManga = viewModel.favoriteManga
+        tableView.reloadData()
+    }
+    
+    func displayReadManagaFailure(viewModel: Main.ReadManga.ViewModel) {
+        ProgressHUDManager.shared.dismissProgress()
+        print(viewModel.error?.localizedDescription ?? "")
+    }
+    
+    func displayDeleteManagaSuccess(viewModel: Main.DeleteManga.ViewModel) {
+        fetchManga()
+    }
+    
+    func displayDeleteManagaFailure(viewModel: Main.DeleteManga.ViewModel) {
+        ProgressHUDManager.shared.dismissProgress()
+        print(viewModel.error?.localizedDescription ?? "")
     }
     
     // MARK: - Navigation
@@ -91,7 +170,14 @@ class MainViewController: UIViewController, MainDisplayLogic {
 
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        guard let mangaData = mangaData else {
+            let color: UIColor = #colorLiteral(red: 0.2901960784, green: 0.2901960784, blue: 0.2901960784, alpha: 1)
+            let font: UIFont = UIFont.systemFont(ofSize: 16.0)
+            tableView.setEmptyMessage(message: "No data found.", textColor: color, font: font)
+            return 0
+        }
+        tableView.resetBackground()
+        return mangaData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
