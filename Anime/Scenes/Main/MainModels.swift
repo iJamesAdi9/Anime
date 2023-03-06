@@ -112,6 +112,18 @@ struct Main {
         }
     }
     
+    struct SelectManga {
+        struct Request {
+            var mangaData: Manga.MangaData?
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
     // MARK: - Manga
     struct Manga: Codable {
         var data: [MangaData]?
