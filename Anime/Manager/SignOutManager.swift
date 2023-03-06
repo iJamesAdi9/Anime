@@ -12,10 +12,11 @@ class SignOutManager {
     
     private init() {}
     
-    func signOut() {
+    func signOut(_ completionHandler: @escaping () -> ()) {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
+            completionHandler()
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
