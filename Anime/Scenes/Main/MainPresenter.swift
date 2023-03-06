@@ -14,6 +14,7 @@ protocol MainPresentationLogic {
     func presentSaveManga(response: Main.SaveManga.Response)
     func presentDeleteManga(response: Main.DeleteManga.Response)
     func presentFilteredManga(response: Main.FilterManga.Response)
+    func presentSearchAnime(response: Main.SearchAnime.Response)
 }
 
 class MainPresenter: MainPresentationLogic {
@@ -49,11 +50,6 @@ class MainPresenter: MainPresentationLogic {
                                  synopsis: $0["synopsis"] as? String,
                                  imageUrl: $0["images"] as? String)
         }
-        
-//        let malID = favoriteManga.map { $0.malID ?? 0 }
-//        mangaData.indices.filter { malID.contains(mangaData[$0].malID ?? 0) }.forEach { (index) in
-//            mangaData[index].isFavorite = true
-//        }
         
         let malID = favoriteManga.map { $0.malID ?? 0 }
         displayMangaData.indices.forEach { displayMangaData[$0].isFavorite = malID.contains(displayMangaData[$0].malID ?? 0) }
@@ -95,6 +91,10 @@ class MainPresenter: MainPresentationLogic {
             let viewModel = Main.FilterManga.ViewModel(mangaData: mangaData)
             viewController?.displayFilteredMangaSuccess(viewModel: viewModel)
         }
+    }
+    
+    func presentSearchAnime(response: Main.SearchAnime.Response) {
+        viewController?.displayAlertSearchAnimeSuccess(viewModel: Main.SearchAnime.ViewModel())
     }
     
 }

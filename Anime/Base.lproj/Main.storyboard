@@ -221,6 +221,9 @@
                                                 <integer key="value" value="7"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="logoutPressed:" destination="tHC-1a-zVR" eventType="touchUpInside" id="rY0-PY-S4E"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8UB-hn-Otz">
                                         <rect key="frame" x="16" y="17" width="110" height="40"/>
@@ -239,6 +242,9 @@
                                                 <integer key="value" value="7"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="favoriteListPressed:" destination="tHC-1a-zVR" eventType="touchUpInside" id="A6g-GS-Qh1"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>

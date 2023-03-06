@@ -101,6 +101,17 @@ struct Main {
         }
     }
     
+    struct SearchAnime {
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
     // MARK: - Manga
     struct Manga: Codable {
         var data: [MangaData]?

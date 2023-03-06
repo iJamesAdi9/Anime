@@ -93,6 +93,9 @@ class LoginViewController: UIViewController, LoginDisplayLogic {
     // MARK: - Display
     
     func displayLoginSuccess(viewModel: Login.Login.ViewModel) {
+        emailTextField.text = nil
+        passwordTextField.text = nil
+        view.endEditing(true)
         ProgressHUDManager.shared.dismissProgress()
         performSegue(withIdentifier: "RouteToMainViewController", sender: nil)
     }

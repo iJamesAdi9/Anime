@@ -104,8 +104,9 @@ class RegisterViewController: UIViewController, RegisterDisplayLogic {
     
     func displayRegisterSuccess(viewModel: Register.Register.ViewModel) {
         ProgressHUDManager.shared.dismissProgress()
-        SignOutManager.shared.signOut()
-        navigationController?.popViewController(animated: true)
+        SignOutManager.shared.signOut {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     func displayRegisterFailure(viewModel: Register.Register.ViewModel) {

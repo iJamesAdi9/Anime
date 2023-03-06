@@ -23,6 +23,8 @@ protocol MainDisplayLogic: AnyObject {
     
     func displayFilteredMangaSuccess(viewModel: Main.FilterManga.ViewModel)
     func displayFilteredMangaFailure(viewModel: Main.FilterManga.ViewModel)
+    
+    func displayAlertSearchAnimeSuccess(viewModel: Main.SearchAnime.ViewModel)
 }
 
 class MainViewController: UIViewController, MainDisplayLogic {
@@ -67,9 +69,21 @@ class MainViewController: UIViewController, MainDisplayLogic {
     
     // MARK: - IBAction
     
-    @IBAction func searchMangaPressed(_ sender: UIBarButtonItem) {
+    @IBAction private func searchMangaPressed(_ sender: UIBarButtonItem) {
+        searchAnime()
     }
     
+    @IBAction private func favoriteListPressed(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction private func logoutPressed(_ sender: UIButton) {
+        ProgressHUDManager.shared.showProgress(view: view)
+        SignOutManager.shared.signOut {
+            ProgressHUDManager.shared.dismissProgress()
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+    }
     
     // MARK: - General Function
     
@@ -97,6 +111,25 @@ class MainViewController: UIViewController, MainDisplayLogic {
         }
         
         return cell
+    }
+    
+    private func showAlertWithTextField() {
+        let alert = UIAlertController(title: "Anime name", message: "Please enter anime name", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addTextField(configurationHandler: { textField in
+            textField.placeholder = "Anime name"
+        })
+        
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+            if let textField = alert.textFields?.first, let text = textField.text {
+                self.fetchManga(search: text)
+            }
+        })
+
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Call Interactor
@@ -129,6 +162,10 @@ class MainViewController: UIViewController, MainDisplayLogic {
         let mangaData = originalMangaData ?? []
         let request = Main.FilterManga.Request(filteredText: filteredText, mangaData: mangaData)
         interactor?.filterManga(request: request)
+    }
+    
+    private func searchAnime() {
+        interactor?.searchAnime(request: Main.SearchAnime.Request())
     }
     
     // MARK: - Display
@@ -185,6 +222,10 @@ class MainViewController: UIViewController, MainDisplayLogic {
     func displayFilteredMangaFailure(viewModel: Main.FilterManga.ViewModel) {
         displayMangaData = nil
         tableView.reloadData()
+    }
+    
+    func displayAlertSearchAnimeSuccess(viewModel: Main.SearchAnime.ViewModel) {
+        showAlertWithTextField()
     }
     
     // MARK: - Navigation

@@ -14,6 +14,7 @@ protocol MainBusinessLogic {
     func saveManga(request: Main.SaveManga.Request)
     func deleteManga(request: Main.DeleteManga.Request)
     func filterManga(request: Main.FilterManga.Request)
+    func searchAnime(request: Main.SearchAnime.Request)
 }
 
 protocol MainDataStore {
@@ -94,5 +95,9 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
             let response = Main.FilterManga.Response(mangaData: originalMangaData)
             presenter?.presentFilteredManga(response: response)
         }
+    }
+    
+    func searchAnime(request: Main.SearchAnime.Request) {
+        presenter?.presentSearchAnime(response: Main.SearchAnime.Response())
     }
 }
