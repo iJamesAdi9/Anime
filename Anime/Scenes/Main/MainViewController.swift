@@ -12,14 +12,17 @@ protocol MainDisplayLogic: AnyObject {
     func displayFetchMangaSuccess(viewModel: Main.FetchManga.ViewModel)
     func displayFetchMangaFailure(viewModel: Main.FetchManga.ViewModel)
     
+    func displayReadMangaSuccess(viewModel: Main.ReadManga.ViewModel)
+    func displayReadMangaFailure(viewModel: Main.ReadManga.ViewModel)
+    
     func displaySaveMangaSuccess(viewModel: Main.SaveManga.ViewModel)
     func displaySaveMangaFailure(viewModel: Main.SaveManga.ViewModel)
     
-    func displayReadManagaSuccess(viewModel: Main.ReadManga.ViewModel)
-    func displayReadManagaFailure(viewModel: Main.ReadManga.ViewModel)
+    func displayDeleteMangaSuccess(viewModel: Main.DeleteManga.ViewModel)
+    func displayDeleteMangaFailure(viewModel: Main.DeleteManga.ViewModel)
     
-    func displayDeleteManagaSuccess(viewModel: Main.DeleteManga.ViewModel)
-    func displayDeleteManagaFailure(viewModel: Main.DeleteManga.ViewModel)
+    func displayFilteredMangaSuccess(viewModel: Main.FilterManga.ViewModel)
+    func displayFilteredMangaFailure(viewModel: Main.FilterManga.ViewModel)
 }
 
 class MainViewController: UIViewController, MainDisplayLogic {
@@ -29,12 +32,15 @@ class MainViewController: UIViewController, MainDisplayLogic {
     var interactor: MainBusinessLogic?
     var router: (NSObjectProtocol & MainRoutingLogic & MainDataPassing)?
     private let mainCell: String = "MainCell"
-    private var mangaData: [Main.Manga.MangaData]?
+    private let defaultMangaData = Main.Manga.MangaData(malID: 0, images: nil, title: "", score: 0.0, synopsis: "")
+    private var originalMangaData: [Main.Manga.MangaData]?
+    private var displayMangaData: [Main.Manga.MangaData]?
     private var favoriteManga: [Main.Manga.MangaData]?
     
     // MARK: - IBOutlet
     
     @IBOutlet weak private var tableView: UITableView!
+    @IBOutlet weak private var mangaSearchBar: UISearchBar!
     
     // MARK: - Object lifecycle
     
@@ -59,6 +65,12 @@ class MainViewController: UIViewController, MainDisplayLogic {
         fetchManga()
     }
     
+    // MARK: - IBAction
+    
+    @IBAction func searchMangaPressed(_ sender: UIBarButtonItem) {
+    }
+    
+    
     // MARK: - General Function
     
     private func setup() {
@@ -77,8 +89,7 @@ class MainViewController: UIViewController, MainDisplayLogic {
     private func setupCell(_ indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: mainCell, for: indexPath) as? MainCell else { return UITableViewCell() }
         
-        let defaultData = Main.Manga.MangaData(malID: 0, images: nil, title: "", score: 0.0, synopsis: "")
-        let data = mangaData?[indexPath.row] ?? defaultData
+        let data = displayMangaData?[indexPath.row] ?? defaultMangaData
         cell.setupManga(data: data)
         
         cell.favoritePressed = { (mangaData) in
@@ -96,16 +107,16 @@ class MainViewController: UIViewController, MainDisplayLogic {
         interactor?.fetchManga(request: request)
     }
     
+    private func readManga() {
+        ProgressHUDManager.shared.showProgress(view: view)
+        let request = Main.ReadManga.Request(originalMangaData: originalMangaData, displayMangaData: displayMangaData)
+        interactor?.readManga(request: request)
+    }
+    
     private func saveManaga(mangaData: Main.Manga.MangaData) {
         ProgressHUDManager.shared.showProgress(view: view)
         let request = Main.SaveManga.Request(manga: mangaData)
         interactor?.saveManga(request: request)
-    }
-    
-    private func readManga() {
-        ProgressHUDManager.shared.showProgress(view: view)
-        let request = Main.ReadManga.Request(mangaData: mangaData)
-        interactor?.readManga(request: request)
     }
     
     private func deleteManga(mangaData: Main.Manga.MangaData) {
@@ -114,10 +125,17 @@ class MainViewController: UIViewController, MainDisplayLogic {
         interactor?.deleteManga(request: request)
     }
     
+    private func filterManga(filteredText: String) {
+        let mangaData = originalMangaData ?? []
+        let request = Main.FilterManga.Request(filteredText: filteredText, mangaData: mangaData)
+        interactor?.filterManga(request: request)
+    }
+    
     // MARK: - Display
     
     func displayFetchMangaSuccess(viewModel: Main.FetchManga.ViewModel) {
-        mangaData = viewModel.data
+        originalMangaData = viewModel.data
+        displayMangaData = viewModel.data
         readManga()
     }
     
@@ -126,8 +144,22 @@ class MainViewController: UIViewController, MainDisplayLogic {
         print(viewModel.error?.localizedDescription ?? "")
     }
     
+    func displayReadMangaSuccess(viewModel: Main.ReadManga.ViewModel) {
+        ProgressHUDManager.shared.dismissProgress()
+        originalMangaData = viewModel.originalMangaData
+        displayMangaData = viewModel.displayMangaData
+        favoriteManga = viewModel.favoriteManga
+        tableView.reloadData()
+    }
+    
+    func displayReadMangaFailure(viewModel: Main.ReadManga.ViewModel) {
+        ProgressHUDManager.shared.dismissProgress()
+        print(viewModel.error?.localizedDescription ?? "")
+    }
+    
     func displaySaveMangaSuccess(viewModel: Main.SaveManga.ViewModel) {
-        fetchManga()
+        ProgressHUDManager.shared.dismissProgress()
+        readManga()
     }
     
     func displaySaveMangaFailure(viewModel: Main.SaveManga.ViewModel) {
@@ -135,25 +167,24 @@ class MainViewController: UIViewController, MainDisplayLogic {
         print(viewModel.error?.localizedDescription ?? "")
     }
     
-    func displayReadManagaSuccess(viewModel: Main.ReadManga.ViewModel) {
+    func displayDeleteMangaSuccess(viewModel: Main.DeleteManga.ViewModel) {
         ProgressHUDManager.shared.dismissProgress()
-        mangaData = viewModel.mangaData
-        favoriteManga = viewModel.favoriteManga
+        readManga()
+    }
+    
+    func displayDeleteMangaFailure(viewModel: Main.DeleteManga.ViewModel) {
+        ProgressHUDManager.shared.dismissProgress()
+        print(viewModel.error?.localizedDescription ?? "")
+    }
+    
+    func displayFilteredMangaSuccess(viewModel: Main.FilterManga.ViewModel) {
+        displayMangaData = viewModel.mangaData
         tableView.reloadData()
     }
     
-    func displayReadManagaFailure(viewModel: Main.ReadManga.ViewModel) {
-        ProgressHUDManager.shared.dismissProgress()
-        print(viewModel.error?.localizedDescription ?? "")
-    }
-    
-    func displayDeleteManagaSuccess(viewModel: Main.DeleteManga.ViewModel) {
-        fetchManga()
-    }
-    
-    func displayDeleteManagaFailure(viewModel: Main.DeleteManga.ViewModel) {
-        ProgressHUDManager.shared.dismissProgress()
-        print(viewModel.error?.localizedDescription ?? "")
+    func displayFilteredMangaFailure(viewModel: Main.FilterManga.ViewModel) {
+        displayMangaData = nil
+        tableView.reloadData()
     }
     
     // MARK: - Navigation
@@ -168,22 +199,34 @@ class MainViewController: UIViewController, MainDisplayLogic {
     }
 }
 
+// MARK: - UISearchBarDelegate
+
+extension MainViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filterManga(filteredText: searchText)
+    }
+}
+
+// MARK: - UITableViewDataSource
+
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let mangaData = mangaData else {
+        guard let displayMangaData = displayMangaData else {
             let color: UIColor = #colorLiteral(red: 0.2901960784, green: 0.2901960784, blue: 0.2901960784, alpha: 1)
             let font: UIFont = UIFont.systemFont(ofSize: 16.0)
             tableView.setEmptyMessage(message: "No data found.", textColor: color, font: font)
             return 0
         }
         tableView.resetBackground()
-        return mangaData.count
+        return displayMangaData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return setupCell(indexPath)
     }
 }
+
+// MARK: - UITableViewDelegate
 
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

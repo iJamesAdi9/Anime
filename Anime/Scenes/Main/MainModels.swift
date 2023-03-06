@@ -29,36 +29,41 @@ struct Main {
         }
     }
     
+    struct ReadManga {
+        struct Request {
+            let originalMangaData: [Manga.MangaData]?
+            let displayMangaData: [Manga.MangaData]?
+        }
+        
+        struct Response {
+            let originalMangaData: [Manga.MangaData]?
+            let displayMangaData: [Manga.MangaData]?
+            let data: QuerySnapshot?
+            let error: Error?
+        }
+        
+        struct ViewModel {
+            let originalMangaData: [Manga.MangaData]?
+            let displayMangaData: [Manga.MangaData]?
+            let favoriteManga: [Manga.MangaData]?
+            let error: Error?
+        }
+    }
+    
     struct SaveManga {
         struct Request {
             let manga: Manga.MangaData?
         }
         
         struct Response {
+            let manga: Manga.MangaData?
             let isSuccess: Bool?
             let error: Error?
         }
         
         struct ViewModel {
+            let manga: Manga.MangaData?
             let isSuccess: Bool?
-            let error: Error?
-        }
-    }
-    
-    struct ReadManga {
-        struct Request {
-            let mangaData: [Manga.MangaData]?
-        }
-        
-        struct Response {
-            let mangaData: [Manga.MangaData]?
-            let data: QuerySnapshot?
-            let error: Error?
-        }
-        
-        struct ViewModel {
-            let mangaData: [Manga.MangaData]?
-            let favoriteManga: [Manga.MangaData]?
             let error: Error?
         }
     }
@@ -69,13 +74,30 @@ struct Main {
         }
         
         struct Response {
+            let manga: Manga.MangaData?
             let isSuccess: Bool?
             let error: Error?
         }
         
         struct ViewModel {
+            let manga: Manga.MangaData?
             let isSuccess: Bool?
             let error: Error?
+        }
+    }
+    
+    struct FilterManga {
+        struct Request {
+            let filteredText: String?
+            let mangaData: [Manga.MangaData]?
+        }
+        
+        struct Response {
+            let mangaData: [Manga.MangaData]?
+        }
+        
+        struct ViewModel {
+            let mangaData: [Manga.MangaData]?
         }
     }
     

@@ -352,9 +352,14 @@
                     </view>
                     <navigationItem key="navigationItem" title="Main" id="9gq-3M-Brk">
                         <barButtonItem key="leftBarButtonItem" id="ei7-zI-GqN"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="dvJ-V1-bU7"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="dvJ-V1-bU7">
+                            <connections>
+                                <action selector="searchMangaPressed:" destination="tHC-1a-zVR" id="E8J-jh-iJf"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="mangaSearchBar" destination="PUO-jH-bYi" id="gbX-25-K8z"/>
                         <outlet property="tableView" destination="TdL-dU-bgg" id="O7I-Of-qia"/>
                     </connections>
                 </viewController>

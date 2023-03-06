@@ -10,9 +10,10 @@ import UIKit
 
 protocol MainPresentationLogic {
     func presentFetchManga(response: Main.FetchManga.Response)
-    func presentSaveManga(response: Main.SaveManga.Response)
     func presentReadManga(response: Main.ReadManga.Response)
+    func presentSaveManga(response: Main.SaveManga.Response)
     func presentDeleteManga(response: Main.DeleteManga.Response)
+    func presentFilteredManga(response: Main.FilterManga.Response)
 }
 
 class MainPresenter: MainPresentationLogic {
@@ -33,21 +34,10 @@ class MainPresenter: MainPresentationLogic {
         viewController?.displayFetchMangaSuccess(viewModel: viewModel)
     }
     
-    func presentSaveManga(response: Main.SaveManga.Response) {
-        guard let isSuccess = response.isSuccess else {
-            let viewModel = Main.SaveManga.ViewModel(isSuccess: false, error: response.error)
-            viewController?.displaySaveMangaFailure(viewModel: viewModel)
-            return
-        }
-        
-        let viewModel = Main.SaveManga.ViewModel(isSuccess: isSuccess, error: nil)
-        viewController?.displaySaveMangaSuccess(viewModel: viewModel)
-    }
-    
     func presentReadManga(response: Main.ReadManga.Response) {
-        guard let snapShot = response.data, var mangaData = response.mangaData else {
-            let viewModel = Main.ReadManga.ViewModel(mangaData: nil, favoriteManga: nil, error: response.error)
-            viewController?.displayReadManagaFailure(viewModel: viewModel)
+        guard let snapShot = response.data, var originalMangaData = response.originalMangaData, var displayMangaData = response.displayMangaData else {
+            let viewModel = Main.ReadManga.ViewModel(originalMangaData: response.originalMangaData, displayMangaData: nil, favoriteManga: nil, error: response.error)
+            viewController?.displayReadMangaFailure(viewModel: viewModel)
             return
         }
         
@@ -60,24 +50,51 @@ class MainPresenter: MainPresentationLogic {
                                  imageUrl: $0["images"] as? String)
         }
         
+//        let malID = favoriteManga.map { $0.malID ?? 0 }
+//        mangaData.indices.filter { malID.contains(mangaData[$0].malID ?? 0) }.forEach { (index) in
+//            mangaData[index].isFavorite = true
+//        }
+        
         let malID = favoriteManga.map { $0.malID ?? 0 }
-        mangaData.indices.filter { malID.contains(mangaData[$0].malID ?? 0) }.forEach { (index) in
-            mangaData[index].isFavorite = true
+        displayMangaData.indices.forEach { displayMangaData[$0].isFavorite = malID.contains(displayMangaData[$0].malID ?? 0) }
+        originalMangaData.indices.forEach { originalMangaData[$0].isFavorite = malID.contains(originalMangaData[$0].malID ?? 0) }
+        
+        let viewModel = Main.ReadManga.ViewModel(originalMangaData: originalMangaData, displayMangaData: displayMangaData, favoriteManga: favoriteManga, error: nil)
+        viewController?.displayReadMangaSuccess(viewModel: viewModel)
+    }
+    
+    func presentSaveManga(response: Main.SaveManga.Response) {
+        guard let isSuccess = response.isSuccess else {
+            let viewModel = Main.SaveManga.ViewModel(manga: response.manga, isSuccess: false, error: response.error)
+            viewController?.displaySaveMangaFailure(viewModel: viewModel)
+            return
         }
         
-        let viewModel = Main.ReadManga.ViewModel(mangaData: mangaData, favoriteManga: favoriteManga, error: nil)
-        viewController?.displayReadManagaSuccess(viewModel: viewModel)
+        let viewModel = Main.SaveManga.ViewModel(manga: response.manga, isSuccess: isSuccess, error: nil)
+        viewController?.displaySaveMangaSuccess(viewModel: viewModel)
     }
     
     func presentDeleteManga(response: Main.DeleteManga.Response) {
         guard let isSuccess = response.isSuccess else {
-            let viewModel = Main.DeleteManga.ViewModel(isSuccess: false, error: response.error)
-            viewController?.displayDeleteManagaFailure(viewModel: viewModel)
+            let viewModel = Main.DeleteManga.ViewModel(manga: response.manga, isSuccess: false, error: response.error)
+            viewController?.displayDeleteMangaFailure(viewModel: viewModel)
             return
         }
         
-        let viewModel = Main.DeleteManga.ViewModel(isSuccess: isSuccess, error: nil)
-        viewController?.displayDeleteManagaSuccess(viewModel: viewModel)
+        let viewModel = Main.DeleteManga.ViewModel(manga: response.manga, isSuccess: isSuccess, error: nil)
+        viewController?.displayDeleteMangaSuccess(viewModel: viewModel)
+    }
+    
+    func presentFilteredManga(response: Main.FilterManga.Response) {
+        let mangaData = response.mangaData ?? []
+        
+        if mangaData.isEmpty {
+            let viewModel = Main.FilterManga.ViewModel(mangaData: nil)
+            viewController?.displayFilteredMangaFailure(viewModel: viewModel)
+        } else {
+            let viewModel = Main.FilterManga.ViewModel(mangaData: mangaData)
+            viewController?.displayFilteredMangaSuccess(viewModel: viewModel)
+        }
     }
     
 }
