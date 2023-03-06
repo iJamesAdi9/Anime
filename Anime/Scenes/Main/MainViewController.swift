@@ -34,7 +34,7 @@ class MainViewController: UIViewController, MainDisplayLogic {
     var interactor: MainBusinessLogic?
     var router: (NSObjectProtocol & MainRoutingLogic & MainDataPassing)?
     private let mainCell: String = "MainCell"
-    private let defaultMangaData = Main.Manga.MangaData(malID: 0, images: nil, title: "", score: 0.0, synopsis: "")
+    private let defaultMangaData = Main.Manga.MangaData(malID: 0, url: "", images: nil, title: "", score: 0.0, synopsis: "")
     private var originalMangaData: [Main.Manga.MangaData]?
     private var displayMangaData: [Main.Manga.MangaData]?
     private var favoriteManga: [Main.Manga.MangaData]?
@@ -69,8 +69,8 @@ class MainViewController: UIViewController, MainDisplayLogic {
     
     // MARK: - IBAction
     
-    @IBAction private func searchMangaPressed(_ sender: UIBarButtonItem) {
-        searchAnime()
+    @IBAction private func searchAnimePressed(_ sender: UIBarButtonItem) {
+        interactor?.searchAnime(request: Main.SearchAnime.Request())
     }
     
     @IBAction private func favoriteListPressed(_ sender: UIButton) {
@@ -136,8 +136,10 @@ class MainViewController: UIViewController, MainDisplayLogic {
     
     private func fetchManga(search: String? = "naruto") {
         ProgressHUDManager.shared.showProgress(view: view)
-        let request = Main.FetchManga.Request(search: search)
-        interactor?.fetchManga(request: request)
+        DispatchQueue.global(qos: .background).async {
+            let request = Main.FetchManga.Request(search: search)
+            self.interactor?.fetchManga(request: request)
+        }
     }
     
     private func readManga() {
@@ -164,10 +166,6 @@ class MainViewController: UIViewController, MainDisplayLogic {
         interactor?.filterManga(request: request)
     }
     
-    private func searchAnime() {
-        interactor?.searchAnime(request: Main.SearchAnime.Request())
-    }
-    
     // MARK: - Display
     
     func displayFetchMangaSuccess(viewModel: Main.FetchManga.ViewModel) {
@@ -182,11 +180,16 @@ class MainViewController: UIViewController, MainDisplayLogic {
     }
     
     func displayReadMangaSuccess(viewModel: Main.ReadManga.ViewModel) {
-        ProgressHUDManager.shared.dismissProgress()
-        originalMangaData = viewModel.originalMangaData
-        displayMangaData = viewModel.displayMangaData
-        favoriteManga = viewModel.favoriteManga
-        tableView.reloadData()
+        DispatchQueue.global(qos: .background).async {
+            self.originalMangaData = viewModel.originalMangaData
+            self.displayMangaData = viewModel.displayMangaData
+            self.favoriteManga = viewModel.favoriteManga
+            
+            DispatchQueue.main.async {
+                ProgressHUDManager.shared.dismissProgress()
+                self.tableView.reloadData()
+            }
+        }
     }
     
     func displayReadMangaFailure(viewModel: Main.ReadManga.ViewModel) {

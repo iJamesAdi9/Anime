@@ -118,6 +118,7 @@ struct Main {
         
         struct MangaData: Codable {
             let malID: Int?
+            let url: String?
             let images: Images?
             let title: String?
             let score: Double?
@@ -127,6 +128,7 @@ struct Main {
             
             enum CodingKeys: String, CodingKey {
                 case malID = "mal_id"
+                case url
                 case images, title, score, synopsis
                 case imageUrl
                 case isFavorite
@@ -147,7 +149,7 @@ struct Main {
             }
             
             func toDictionary() -> [String: Any] {
-                return ["malID": malID ?? 0, "images": imageUrl ?? "", "title": title ?? "", "score": score ?? 0.0, "synopsis": synopsis ?? ""]
+                return ["malID": malID ?? 0, "url": url ?? "", "images": imageUrl ?? "", "title": title ?? "", "score": score ?? 0.0, "synopsis": synopsis ?? ""]
             }
         }
     }

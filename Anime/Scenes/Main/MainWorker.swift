@@ -28,7 +28,7 @@ class MainWorker {
         let email = Auth.auth().currentUser?.email ?? ""
         let db = Firestore.firestore()
         
-        let newData = Main.Manga.MangaData(malID: data.malID, images: data.images, title: data.title, score: data.score, synopsis: data.synopsis, imageUrl: data.imageUrl)
+        let newData = Main.Manga.MangaData(malID: data.malID, url: data.url, images: data.images, title: data.title, score: data.score, synopsis: data.synopsis, imageUrl: data.imageUrl)
         
         db.collection("users").document(email).collection("Manga").document("malID_\(newData.malID ?? 0)").setData(newData.toDictionary()) { (error) in
             if let error = error {

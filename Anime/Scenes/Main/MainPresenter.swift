@@ -29,7 +29,7 @@ class MainPresenter: MainPresentationLogic {
             return
         }
         
-        let newData = data.map { Main.Manga.MangaData(malID: $0.malID, images: $0.images, title: $0.title, score: $0.score, synopsis: $0.synopsis, imageUrl: $0.images?.jpg?.imageURL) }
+        let newData = data.map { Main.Manga.MangaData(malID: $0.malID, url: $0.url, images: $0.images, title: $0.title, score: $0.score, synopsis: $0.synopsis, imageUrl: $0.images?.jpg?.imageURL) }
         
         let viewModel = Main.FetchManga.ViewModel(data: newData, error: nil)
         viewController?.displayFetchMangaSuccess(viewModel: viewModel)
@@ -44,6 +44,7 @@ class MainPresenter: MainPresentationLogic {
         
         let favoriteManga = snapShot.documents.compactMap { $0.data() }.compactMap {
             Main.Manga.MangaData(malID: $0["malID"] as? Int,
+                                 url: $0["url"] as? String,
                                  images: nil,
                                  title: $0["title"] as? String,
                                  score: $0["score"] as? Double,
