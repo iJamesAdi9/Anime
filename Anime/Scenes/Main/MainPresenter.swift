@@ -15,6 +15,7 @@ protocol MainPresentationLogic {
     func presentDeleteManga(response: Main.DeleteManga.Response)
     func presentFilteredManga(response: Main.FilterManga.Response)
     func presentSearchAnime(response: Main.SearchAnime.Response)
+    func presentDidSelectItem(response: Main.SelectManga.Response)
 }
 
 class MainPresenter: MainPresentationLogic {
@@ -98,4 +99,7 @@ class MainPresenter: MainPresentationLogic {
         viewController?.displayAlertSearchAnimeSuccess(viewModel: Main.SearchAnime.ViewModel())
     }
     
+    func presentDidSelectItem(response: Main.SelectManga.Response) {
+        viewController?.displayDisSelectItem(viewModel: Main.SelectManga.ViewModel())
+    }
 }

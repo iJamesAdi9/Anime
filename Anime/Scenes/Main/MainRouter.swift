@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol MainRoutingLogic {
-    //func routeToSomewhere(segue: UIStoryboardSegue?)
+    func routeToDetailViewController(segue: UIStoryboardSegue?)
 }
 
 protocol MainDataPassing {
@@ -22,29 +22,16 @@ class MainRouter: NSObject, MainRoutingLogic, MainDataPassing {
     
     // MARK: Routing
     
-    //func routeToSomewhere(segue: UIStoryboardSegue?) {
-    //  if let segue = segue {
-    //    let destinationVC = segue.destination as! SomewhereViewController
-    //    var destinationDS = destinationVC.router!.dataStore!
-    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //  } else {
-    //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-    //    var destinationDS = destinationVC.router!.dataStore!
-    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-    //  }
-    //}
-    
-    // MARK: Navigation
-    
-    //func navigateToSomewhere(source: MainViewController, destination: SomewhereViewController) {
-    //  source.show(destination, sender: nil)
-    //}
+    func routeToDetailViewController(segue: UIStoryboardSegue?) {
+        guard let segue = segue else { return }
+        let destinationVC = segue.destination as! DetailViewController
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToDetailViewController(source: dataStore!, destination: &destinationDS)
+    }
     
     // MARK: Passing data
     
-    //func passDataToSomewhere(source: MainDataStore, destination: inout SomewhereDataStore) {
-    //  destination.name = source.name
-    //}
+    func passDataToDetailViewController(source: MainDataStore, destination: inout DetailDataStore) {
+        destination.mangaData = source.mangaData
+    }
 }

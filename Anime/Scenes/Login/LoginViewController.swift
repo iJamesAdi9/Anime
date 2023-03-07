@@ -97,12 +97,12 @@ class LoginViewController: UIViewController, LoginDisplayLogic {
         passwordTextField.text = nil
         view.endEditing(true)
         ProgressHUDManager.shared.dismissProgress()
-        performSegue(withIdentifier: "RouteToMainViewController", sender: nil)
+        performSegue(withIdentifier: "MainViewController", sender: nil)
     }
     
     func displayAutoLoginSuccess(viewModel: Login.AutuLogin.ViewModel) {
         DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "RouteToMainViewController", sender: nil)
+            self.performSegue(withIdentifier: "MainViewController", sender: nil)
         }
     }
     

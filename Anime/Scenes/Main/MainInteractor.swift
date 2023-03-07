@@ -15,14 +15,17 @@ protocol MainBusinessLogic {
     func deleteManga(request: Main.DeleteManga.Request)
     func filterManga(request: Main.FilterManga.Request)
     func searchAnime(request: Main.SearchAnime.Request)
+    func didSelectItem(request: Main.SelectManga.Request)
 }
 
 protocol MainDataStore {
+    var mangaData: Main.Manga.MangaData? { get set }
 }
 
 class MainInteractor: MainBusinessLogic, MainDataStore {
     var presenter: MainPresentationLogic?
     var worker: MainWorker? = MainWorker()
+    var mangaData: Main.Manga.MangaData?
     
     // MARK: Do something
     
@@ -99,5 +102,10 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
     
     func searchAnime(request: Main.SearchAnime.Request) {
         presenter?.presentSearchAnime(response: Main.SearchAnime.Response())
+    }
+    
+    func didSelectItem(request: Main.SelectManga.Request) {
+        mangaData = request.mangaData
+        presenter?.presentDidSelectItem(response: Main.SelectManga.Response())
     }
 }

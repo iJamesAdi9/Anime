@@ -25,6 +25,7 @@ protocol MainDisplayLogic: AnyObject {
     func displayFilteredMangaFailure(viewModel: Main.FilterManga.ViewModel)
     
     func displayAlertSearchAnimeSuccess(viewModel: Main.SearchAnime.ViewModel)
+    func displayDisSelectItem(viewModel: Main.SelectManga.ViewModel)
 }
 
 class MainViewController: UIViewController, MainDisplayLogic {
@@ -231,6 +232,10 @@ class MainViewController: UIViewController, MainDisplayLogic {
         showAlertWithTextField()
     }
     
+    func displayDisSelectItem(viewModel: Main.SelectManga.ViewModel) {
+        performSegue(withIdentifier: "DetailViewController", sender: nil)
+    }
+    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -275,5 +280,8 @@ extension MainViewController: UITableViewDataSource {
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        guard let mangaData = displayMangaData?[indexPath.row] else { return }
+        let request = Main.SelectManga.Request(mangaData: mangaData)
+        interactor?.didSelectItem(request: request)
     }
 }
