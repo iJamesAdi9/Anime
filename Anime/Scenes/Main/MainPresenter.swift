@@ -100,6 +100,6 @@ class MainPresenter: MainPresentationLogic {
     }
     
     func presentDidSelectItem(response: Main.SelectManga.Response) {
-        viewController?.displayDisSelectItem(viewModel: Main.SelectManga.ViewModel())
+        viewController?.displayDidSelectItem(viewModel: Main.SelectManga.ViewModel())
     }
 }

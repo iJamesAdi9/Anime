@@ -25,7 +25,7 @@ protocol MainDisplayLogic: AnyObject {
     func displayFilteredMangaFailure(viewModel: Main.FilterManga.ViewModel)
     
     func displayAlertSearchAnimeSuccess(viewModel: Main.SearchAnime.ViewModel)
-    func displayDisSelectItem(viewModel: Main.SelectManga.ViewModel)
+    func displayDidSelectItem(viewModel: Main.SelectManga.ViewModel)
 }
 
 class MainViewController: UIViewController, MainDisplayLogic {
@@ -65,17 +65,17 @@ class MainViewController: UIViewController, MainDisplayLogic {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchManga()
+        if mangaSearchBar.text?.count == 0 {
+            fetchManga()
+        } else {
+            readManga()
+        }
     }
     
     // MARK: - IBAction
     
     @IBAction private func searchAnimePressed(_ sender: UIBarButtonItem) {
         interactor?.searchAnime(request: Main.SearchAnime.Request())
-    }
-    
-    @IBAction private func favoriteListPressed(_ sender: UIButton) {
-        
     }
     
     @IBAction private func logoutPressed(_ sender: UIButton) {
@@ -232,7 +232,7 @@ class MainViewController: UIViewController, MainDisplayLogic {
         showAlertWithTextField()
     }
     
-    func displayDisSelectItem(viewModel: Main.SelectManga.ViewModel) {
+    func displayDidSelectItem(viewModel: Main.SelectManga.ViewModel) {
         performSegue(withIdentifier: "DetailViewController", sender: nil)
     }
     
