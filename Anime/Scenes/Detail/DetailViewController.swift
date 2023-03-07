@@ -11,6 +11,7 @@ import Kingfisher
 
 protocol DetailDisplayLogic: AnyObject {
     func displaySetupData(viewModel: Detail.SetupData.ViewModel)
+    func displayOpenWebView(viewModel: Detail.OpenWebView.ViewModel)
 }
 
 class DetailViewController: UIViewController, DetailDisplayLogic {
@@ -25,6 +26,7 @@ class DetailViewController: UIViewController, DetailDisplayLogic {
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var animeImageView: UIImageView!
     @IBOutlet weak private var detailLabel: UILabel!
+    @IBOutlet weak private var favoriteButton: UIButton!
     
     // MARK: - Object lifecycle
     
@@ -48,9 +50,10 @@ class DetailViewController: UIViewController, DetailDisplayLogic {
     // MARK: - IBAction
     
     @IBAction private func webviewPressed(_ sender: UIButton) {
+        interactor?.openWebView(request: Detail.OpenWebView.Request())
     }
     
-    @IBAction func favoritePressed(_ sender: UIButton) {
+    @IBAction private func favoritePressed(_ sender: UIButton) {
     }
     
     // MARK: - General Function
@@ -84,6 +87,12 @@ class DetailViewController: UIViewController, DetailDisplayLogic {
         detailLabel.text = detail
         animeImageView.kf.indicatorType = .activity
         animeImageView.kf.setImage(with: URL(string: imageUrl))
+        favoriteButton.setImage(viewModel.imageButton, for: .normal)
+        favoriteButton.setTitle(viewModel.titleButton, for: .normal)
+    }
+    
+    func displayOpenWebView(viewModel: Detail.OpenWebView.ViewModel) {
+        performSegue(withIdentifier: "WebViewController", sender: nil)
     }
     
     // MARK: - Navigation

@@ -10,6 +10,7 @@ import UIKit
 
 protocol DetailBusinessLogic {
     func setupData(request: Detail.SetupData.Request)
+    func openWebView(request: Detail.OpenWebView.Request)
 }
 
 protocol DetailDataStore {
@@ -26,5 +27,10 @@ class DetailInteractor: DetailBusinessLogic, DetailDataStore {
     func setupData(request: Detail.SetupData.Request) {
         let response = Detail.SetupData.Response(mangaData: mangaData)
         presenter?.presentSetupData(response: response)
+    }
+    
+    func openWebView(request: Detail.OpenWebView.Request) {
+        let response = Detail.OpenWebView.Response(mangaData: mangaData)
+        presenter?.presentOpenWebView(response: response)
     }
 }

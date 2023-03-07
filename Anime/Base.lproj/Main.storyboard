@@ -397,6 +397,11 @@
                                         <state key="normal" title="Add Favorite" image="heart.fill" catalog="system">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="7"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="favoritePressed:" destination="EdJ-hI-25D" eventType="touchUpInside" id="aQj-JS-qhc"/>
                                         </connections>
@@ -412,6 +417,11 @@
                                         <state key="normal" title="Open Website">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="7"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="webviewPressed:" destination="EdJ-hI-25D" eventType="touchUpInside" id="vBY-3e-DZR"/>
                                         </connections>
@@ -499,12 +509,83 @@
                     <connections>
                         <outlet property="animeImageView" destination="mYF-fs-zVd" id="8nO-2T-fIm"/>
                         <outlet property="detailLabel" destination="MX3-u2-juY" id="0Rm-ij-YEk"/>
+                        <outlet property="favoriteButton" destination="82m-Rx-ODa" id="Zpd-fe-zzZ"/>
                         <outlet property="titleLabel" destination="7Sk-Qw-eGl" id="wvB-9K-j8j"/>
+                        <segue destination="ThK-NS-bHs" kind="presentation" identifier="WebViewController" modalPresentationStyle="fullScreen" id="vrs-JA-aEq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UVC-ep-MnJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2698.5507246376815" y="-2.0089285714285712"/>
+        </scene>
+        <!--WebViewController-->
+        <scene sceneID="edX-kP-U7N">
+            <objects>
+                <viewController storyboardIdentifier="WebViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ThK-NS-bHs" userLabel="WebViewController" customClass="WebViewController" customModule="Anime" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="60T-pt-9H1">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qU6-To-3Rj">
+                                <rect key="frame" x="0.0" y="93" width="414" height="769"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1H7-5N-jWY">
+                                <rect key="frame" x="20" y="48" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="WIV-eX-AuV"/>
+                                    <constraint firstAttribute="height" constant="35" id="abr-Jw-GBJ"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="xmark" catalog="system" symbolScale="large"/>
+                                </state>
+                                <connections>
+                                    <action selector="dismissPressed:" destination="ThK-NS-bHs" eventType="touchUpInside" id="Hbr-ii-hOX"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="22f-Zg-4DW">
+                                <rect key="frame" x="359" y="48" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="6JE-sj-1rI"/>
+                                    <constraint firstAttribute="height" constant="35" id="Z0z-r7-IXL"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="square.and.arrow.up" catalog="system" symbolScale="large"/>
+                                </state>
+                                <connections>
+                                    <action selector="sharePressed:" destination="ThK-NS-bHs" eventType="touchUpInside" id="fGk-qE-bOB"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="7Lg-pg-nBT"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="7Lg-pg-nBT" firstAttribute="trailing" secondItem="22f-Zg-4DW" secondAttribute="trailing" constant="20" id="1v7-IA-TMS"/>
+                            <constraint firstItem="qU6-To-3Rj" firstAttribute="top" secondItem="1H7-5N-jWY" secondAttribute="bottom" constant="10" id="GbK-tg-1kj"/>
+                            <constraint firstItem="qU6-To-3Rj" firstAttribute="bottom" secondItem="7Lg-pg-nBT" secondAttribute="bottom" id="KBg-0u-0v5"/>
+                            <constraint firstItem="1H7-5N-jWY" firstAttribute="leading" secondItem="7Lg-pg-nBT" secondAttribute="leading" constant="20" id="OL5-3d-DI1"/>
+                            <constraint firstItem="1H7-5N-jWY" firstAttribute="top" secondItem="7Lg-pg-nBT" secondAttribute="top" id="Q2S-06-48p"/>
+                            <constraint firstItem="qU6-To-3Rj" firstAttribute="leading" secondItem="7Lg-pg-nBT" secondAttribute="leading" id="ZKO-2t-98Q"/>
+                            <constraint firstItem="22f-Zg-4DW" firstAttribute="centerY" secondItem="1H7-5N-jWY" secondAttribute="centerY" id="p84-ow-7CV"/>
+                            <constraint firstItem="qU6-To-3Rj" firstAttribute="trailing" secondItem="7Lg-pg-nBT" secondAttribute="trailing" id="zKP-nL-2i0"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="JLU-a5-QjC"/>
+                    <connections>
+                        <outlet property="wkWebView" destination="qU6-To-3Rj" id="bIX-3V-F1a"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cGW-A8-qNd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3622" y="-2"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nBo-4Q-l5p">
@@ -532,6 +613,8 @@
         <image name="heart" catalog="system" width="128" height="107"/>
         <image name="heart.fill" catalog="system" width="128" height="107"/>
         <image name="logo" width="1024" height="1024"/>
+        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="AccentColor">
             <color red="1" green="0.79199999570846558" blue="0.15700000524520874" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
