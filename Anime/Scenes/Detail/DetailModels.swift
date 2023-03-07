@@ -39,4 +39,40 @@ struct Detail {
             let mangaData: Main.Manga.MangaData?
         }
     }
+    
+    struct SaveManga {
+        struct Request {
+            let manga: Main.Manga.MangaData?
+        }
+        
+        struct Response {
+            let manga: Main.Manga.MangaData?
+            let isSuccess: Bool?
+            let error: Error?
+        }
+        
+        struct ViewModel {
+            let title: String
+            let image: UIImage
+            let error: Error?
+        }
+    }
+    
+    struct DeleteManga {
+        struct Request {
+            let manga: Main.Manga.MangaData?
+        }
+        
+        struct Response {
+            let manga: Main.Manga.MangaData?
+            let isSuccess: Bool?
+            let error: Error?
+        }
+        
+        struct ViewModel {
+            let title: String
+            let image: UIImage
+            let error: Error?
+        }
+    }
 }

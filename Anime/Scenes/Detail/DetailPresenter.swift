@@ -11,6 +11,8 @@ import UIKit
 protocol DetailPresentationLogic {
     func presentSetupData(response: Detail.SetupData.Response)
     func presentOpenWebView(response: Detail.OpenWebView.Response)
+    func presentSaveManga(response: Detail.SaveManga.Response)
+    func presentDeleteManga(response: Detail.DeleteManga.Response)
 }
 
 class DetailPresenter: DetailPresentationLogic {
@@ -30,5 +32,27 @@ class DetailPresenter: DetailPresentationLogic {
     func presentOpenWebView(response: Detail.OpenWebView.Response) {
         let viewModel = Detail.OpenWebView.ViewModel(mangaData: response.mangaData)
         viewController?.displayOpenWebView(viewModel: viewModel)
+    }
+    
+    func presentSaveManga(response: Detail.SaveManga.Response) {
+        guard response.isSuccess != nil else {
+            let viewModel = Detail.SaveManga.ViewModel(title: "Favorite", image: UIImage(systemName: "heart.fill")!, error: response.error)
+            viewController?.displaySaveMangaFailure(viewModel: viewModel)
+            return
+        }
+        
+        let viewModel = Detail.SaveManga.ViewModel(title: "UnFavorite", image: UIImage(systemName: "heart")!, error: nil)
+        viewController?.displaySaveMangaSuccess(viewModel: viewModel)
+    }
+    
+    func presentDeleteManga(response: Detail.DeleteManga.Response) {
+        guard response.isSuccess != nil else {
+            let viewModel = Detail.DeleteManga.ViewModel(title: "UnFavorite", image: UIImage(systemName: "heart")!, error: response.error)
+            viewController?.displayDeleteMangaFailure(viewModel: viewModel)
+            return
+        }
+        
+        let viewModel = Detail.DeleteManga.ViewModel(title: "Favorite", image: UIImage(systemName: "heart.fill")!, error: response.error)
+        viewController?.displayDeleteMangaSuccess(viewModel: viewModel)
     }
 }

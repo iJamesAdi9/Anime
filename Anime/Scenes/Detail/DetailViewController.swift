@@ -12,10 +12,15 @@ import Kingfisher
 protocol DetailDisplayLogic: AnyObject {
     func displaySetupData(viewModel: Detail.SetupData.ViewModel)
     func displayOpenWebView(viewModel: Detail.OpenWebView.ViewModel)
+    
+    func displaySaveMangaSuccess(viewModel: Detail.SaveManga.ViewModel)
+    func displaySaveMangaFailure(viewModel: Detail.SaveManga.ViewModel)
+    
+    func displayDeleteMangaSuccess(viewModel: Detail.DeleteManga.ViewModel)
+    func displayDeleteMangaFailure(viewModel: Detail.DeleteManga.ViewModel)
 }
 
 class DetailViewController: UIViewController, DetailDisplayLogic {
-    
     // MARK: - Properties
     
     var interactor: DetailBusinessLogic?
@@ -54,6 +59,8 @@ class DetailViewController: UIViewController, DetailDisplayLogic {
     }
     
     @IBAction private func favoritePressed(_ sender: UIButton) {
+        ProgressHUDManager.shared.showProgress(view: view)
+        interactor?.favoriteManga()
     }
     
     // MARK: - General Function
@@ -71,9 +78,14 @@ class DetailViewController: UIViewController, DetailDisplayLogic {
         router.dataStore = interactor
     }
     
-    func setupData() {
+    private func setupData() {
         let request = Detail.SetupData.Request()
         interactor?.setupData(request: request)
+    }
+    
+    private func setFavoriteButton(title: String, image: UIImage) {
+        favoriteButton.setImage(image, for: .normal)
+        favoriteButton.setTitle(title, for: .normal)
     }
     
     // MARK: - Display
@@ -87,12 +99,31 @@ class DetailViewController: UIViewController, DetailDisplayLogic {
         detailLabel.text = detail
         animeImageView.kf.indicatorType = .activity
         animeImageView.kf.setImage(with: URL(string: imageUrl))
-        favoriteButton.setImage(viewModel.imageButton, for: .normal)
-        favoriteButton.setTitle(viewModel.titleButton, for: .normal)
+        setFavoriteButton(title: viewModel.titleButton, image: viewModel.imageButton)
     }
     
     func displayOpenWebView(viewModel: Detail.OpenWebView.ViewModel) {
         performSegue(withIdentifier: "WebViewController", sender: nil)
+    }
+    
+    func displaySaveMangaSuccess(viewModel: Detail.SaveManga.ViewModel) {
+        ProgressHUDManager.shared.dismissProgress()
+        setFavoriteButton(title: viewModel.title, image: viewModel.image)
+    }
+    
+    func displaySaveMangaFailure(viewModel: Detail.SaveManga.ViewModel) {
+        ProgressHUDManager.shared.dismissProgress()
+        setFavoriteButton(title: viewModel.title, image: viewModel.image)
+    }
+    
+    func displayDeleteMangaSuccess(viewModel: Detail.DeleteManga.ViewModel) {
+        ProgressHUDManager.shared.dismissProgress()
+        setFavoriteButton(title: viewModel.title, image: viewModel.image)
+    }
+    
+    func displayDeleteMangaFailure(viewModel: Detail.DeleteManga.ViewModel) {
+        ProgressHUDManager.shared.dismissProgress()
+        setFavoriteButton(title: viewModel.title, image: viewModel.image)
     }
     
     // MARK: - Navigation
