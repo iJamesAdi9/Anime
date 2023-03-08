@@ -51,7 +51,7 @@ class LoginViewController: UIViewController, LoginDisplayLogic {
     // MARK: - IBAction
     
     @IBAction func loginPressed(_ sender: UIButton) {
-        //login()
+        login(email: emailTextField.text ?? "", password: passwordTextField.text ?? "")
     }
     
     // MARK: - General Function
@@ -69,21 +69,18 @@ class LoginViewController: UIViewController, LoginDisplayLogic {
         router.dataStore = interactor
     }
     
-    private func autoLogin() {
+    func autoLogin() {
         let request = Login.AutuLogin.Request()
         interactor?.autoLogin(request: request)
     }
     
-    private func login() {
+    func login(email: String, password: String) {
         ProgressHUDManager.shared.showProgress(view: view)
-        
-        let email: String = emailTextField.text ?? ""
-        let password: String = passwordTextField.text ?? ""
         let request = Login.Login.Request(email: email, password: password)
         interactor?.login(request: request)
     }
     
-    private func showAlert(message: String) {
+    func showAlert(message: String) {
         let alert = UIAlertController(title: "Warning!", message: message, preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style: .default)
         alert.addAction(ok)
