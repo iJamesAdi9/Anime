@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--LoginViewController-->
+        <!--Login2ViewController-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="LoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" userLabel="LoginViewController" customClass="LoginViewController" customModule="Anime" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Login2ViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" userLabel="Login2ViewController" customClass="Login2ViewController" customModule="Anime" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -108,10 +108,10 @@
             </objects>
             <point key="canvasLocation" x="936" y="-2"/>
         </scene>
-        <!--RegisterViewController-->
+        <!--Register2ViewController-->
         <scene sceneID="V51-CE-o3e">
             <objects>
-                <viewController storyboardIdentifier="RegisterViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3eX-Hv-mRx" userLabel="RegisterViewController" customClass="RegisterViewController" customModule="Anime" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Register2ViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3eX-Hv-mRx" userLabel="Register2ViewController" customClass="Register2ViewController" customModule="Anime" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MG4-BU-Pjq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
